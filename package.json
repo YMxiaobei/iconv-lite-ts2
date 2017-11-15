@@ -1,0 +1,11 @@
+{
+  "name": "iconv-lite-ts2",
+  "version": "0.0.1",
+  "description": "iconv-lite for typescript",
+  "main": "./lib/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ymxiaolongxia",
+  "license": "MIT"
+}
