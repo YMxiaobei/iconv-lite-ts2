@@ -29,7 +29,14 @@ export function bufToStr(buf: ArrayBuffer) {
 }
 
 export function strToBuf (str: string) {
-    return new ArrayBuffer(str.length * 2);
+    let newBuf = new ArrayBuffer(str.length * 2);
+    let newBufView = new Uint16Array (newBuf);
+
+    for ( let i = 0, len = str.length; i < len; i++ ) {
+        newBufView[ i ] = str.charCodeAt(i);
+    }   
+
+    return newBuf;
 }
 
 export function findIdx(table, val) {
@@ -45,4 +52,35 @@ export function findIdx(table, val) {
             r = mid;
     }
     return l;
+}
+
+export function detectEncoding(buf, defaultEncoding) {
+    var enc = defaultEncoding || 'utf-16le';
+
+    if (buf.length >= 2) {
+        // Check BOM.
+        if (buf[0] == 0xFE && buf[1] == 0xFF) // UTF-16BE BOM
+            enc = 'utf-16be';
+        else if (buf[0] == 0xFF && buf[1] == 0xFE) // UTF-16LE BOM
+            enc = 'utf-16le';
+        else {
+            // No BOM found. Try to deduce encoding from initial content.
+            // Most of the time, the content has ASCII chars (U+00**), but the opposite (U+**00) is uncommon.
+            // So, we count ASCII as if it was LE or BE, and decide from that.
+            var asciiCharsLE = 0, asciiCharsBE = 0, // Counts of chars in both positions
+                _len = Math.min(buf.length - (buf.length % 2), 64); // Len is always even.
+
+            for (var i = 0; i < _len; i += 2) {
+                if (buf[i] === 0 && buf[i+1] !== 0) asciiCharsBE++;
+                if (buf[i] !== 0 && buf[i+1] === 0) asciiCharsLE++;
+            }
+
+            if (asciiCharsBE > asciiCharsLE)
+                enc = 'utf-16be';
+            else if (asciiCharsBE < asciiCharsLE)
+                enc = 'utf-16le';
+        }
+    }
+
+    return enc;
 }

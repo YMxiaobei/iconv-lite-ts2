@@ -1,11 +1,16 @@
 {
   "name": "iconv-lite-ts2",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "iconv-lite for typescript",
   "main": "./lib/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "ymxiaolongxia",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+        "type": "git",
+        "url": "git@github.com:YMxiaobei/iconv-lite-ts2.git"
+   },
+   "homepage": "https://github.com/YMxiaobei/iconv-lite-ts2"
 }
