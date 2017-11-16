@@ -1,8 +1,8 @@
 {
   "name": "iconv-lite-ts2",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "iconv-lite for typescript",
-  "main": "./lib/index.ts",
+  "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,5 +12,6 @@
         "type": "git",
         "url": "git@github.com:YMxiaobei/iconv-lite-ts2.git"
    },
-   "homepage": "https://github.com/YMxiaobei/iconv-lite-ts2"
+   "homepage": "https://github.com/YMxiaobei/iconv-lite-ts2",
+  "es2015": "es2015/index.js"
 }

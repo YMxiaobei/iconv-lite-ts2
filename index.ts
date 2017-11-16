@@ -1,0 +1,1 @@
+export {Iconv} from './lib/index';
