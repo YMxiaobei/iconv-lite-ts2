@@ -20,7 +20,7 @@ export function concatBuf(bufs: ArrayBuffer[]) {
     return newBuf;
 }
 
-export function bufToStr(buf: ArrayBuffer) {
+export function bufToStr(buf: ArrayBuffer, type?:string) {
     let bufView = new Uint16Array(buf);
     let str: string = '';
 
@@ -28,7 +28,7 @@ export function bufToStr(buf: ArrayBuffer) {
     return str;
 }
 
-export function strToBuf (str: string) {
+export function strToBuf (str: string, type?: string) {
     let newBuf = new ArrayBuffer(str.length * 2);
     let newBufView = new Uint16Array (newBuf);
 
@@ -83,4 +83,8 @@ export function detectEncoding(buf, defaultEncoding) {
     }
 
     return enc;
+}
+
+export function writeBuf (buf: ArrayBuffer, content: any, startIndex?: number, endInex?: number) {
+    return 0;
 }

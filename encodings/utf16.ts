@@ -1,5 +1,5 @@
 "use strict";
-import {detectEncoding, strToBuf} from '../../util/util';
+import {bufToStr, concatBuf, detectEncoding, strToBuf} from '../util/util';
 
 // Note: UTF16-LE (or UCS2) codec is Node.js native. See encodings/internal.js
 
@@ -27,10 +27,10 @@ class Utf16BEEncoder {
 
     write (str: string) {
         let buf = strToBuf( str );
-        let bufView = new Uint8Array (bufView);
+        let bufView = new Uint8Array (buf);
 
-        for (var i = 0; i < buf.byteLength; i += 2) {
-            var tmp = bufView[i]; bufView[i] = bufView[i+1]; bufView[i+1] = tmp;
+        for (let i = 0; i < buf.byteLength; i += 2) {
+            let tmp = bufView[i]; bufView[i] = bufView[i+1]; bufView[i+1] = tmp;
         }
         return buf;
     }
@@ -51,6 +51,8 @@ class Utf16BEDecoder {
     }
 
     write ( buf: ArrayBuffer ) {
+        let bufView = new Uint8Array(buf);
+
         if (buf.byteLength == 0)
             return '';
 
@@ -59,19 +61,20 @@ class Utf16BEDecoder {
             i = 0, j = 0;
 
         if (this.overflowByte !== -1) {
-            buf2[0] = buf[0];
-            buf2[1] = this.overflowByte;
+            buf2View[0] = bufView[0];
+            buf2View[1] = this.overflowByte;
             i = 1; j = 2;
         }
 
-        for (; i < buf.length-1; i += 2, j+= 2) {
-            buf2[j] = buf[i+1];
-            buf2[j+1] = buf[i];
+        for (; i < buf.byteLength-1; i += 2, j+= 2) {
+            buf2View[j] = bufView[i+1];
+            buf2View[j+1] = bufView[i];
         }
 
-        this.overflowByte = (i == buf.length-1) ? buf[buf.length-1] : -1;
+        this.overflowByte = (i == buf.byteLength-1) ? bufView[buf.byteLength-1] : -1;
 
-        return buf2.slice(0, j).toString('ucs2');
+
+        return bufToStr(buf2.slice(0, j));
     }
 
     end () {
@@ -104,6 +107,8 @@ class Utf16Codec {
 // -- Encoding (pass-through)
 
 class Utf16Encoder {
+    encoder: any;
+
     constructor (options: any, codec: any) {
         options = options || {};
         if (options.addBOM === undefined)
@@ -116,7 +121,7 @@ class Utf16Encoder {
     }
 
     end () {
-        return this.encoder,end();
+        return this.encoder.end();
     }
 }
 
@@ -129,7 +134,7 @@ class Utf16Decoder {
     initialBytes: any;
     initialBytesLen = 0;
     options: any;
-    iconv：any;    
+    iconv: any;
 
     constructor (options: any, codec: any) {
         this.decoder = null;
@@ -144,13 +149,13 @@ class Utf16Decoder {
         if (!this.decoder) {
         // Codec is not chosen yet. Accumulate initial bytes.
             this.initialBytes.push(buf);
-            this.initialBytesLen += buf.length;
+            this.initialBytesLen += buf.byteLength;
             
             if (this.initialBytesLen < 16) // We need more bytes to use space heuristic (see below)
                 return '';
 
             // We have enough bytes -> detect endianness.
-            var buf = Buffer.concat(this.initialBytes),
+            let buf = concatBuf(this.initialBytes),
                 encoding = detectEncoding(buf, this.options.defaultEncoding);
             this.decoder = this.iconv.getDecoder(encoding, this.options);
             this.initialBytes.length = this.initialBytesLen = 0;
@@ -161,11 +166,11 @@ class Utf16Decoder {
 
     end () {
         if (!this.decoder) {
-            var buf = Buffer.concat(this.initialBytes),
+            let buf = concatBuf(this.initialBytes),
                 encoding = detectEncoding(buf, this.options.defaultEncoding);
             this.decoder = this.iconv.getDecoder(encoding, this.options);
 
-            var res = this.decoder.write(buf),
+            let res = this.decoder.write(buf),
                 trail = this.decoder.end();
 
             return trail ? (res + trail) : res;
