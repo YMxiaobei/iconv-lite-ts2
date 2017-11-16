@@ -1,9 +1,7 @@
 "use strict";
 exports.__esModule = true;
 var util_1 = require("../util/util");
-// Note: UTF16-LE (or UCS2) codec is Node.js native. See encodings/internal.js
-// == UTF16-BE codec. ==========================================================
-var Utf16BECodec = /** @class */ (function () {
+var Utf16BECodec = (function () {
     function Utf16BECodec() {
         this.encoder = Utf16BEEncoder;
         this.decoder = Utf16BEDecoder;
@@ -11,8 +9,7 @@ var Utf16BECodec = /** @class */ (function () {
     }
     return Utf16BECodec;
 }());
-// -- Encoding
-var Utf16BEEncoder = /** @class */ (function () {
+var Utf16BEEncoder = (function () {
     function Utf16BEEncoder() {
     }
     Utf16BEEncoder.prototype.write = function (str) {
@@ -29,8 +26,7 @@ var Utf16BEEncoder = /** @class */ (function () {
     };
     return Utf16BEEncoder;
 }());
-// -- Decoding
-var Utf16BEDecoder = /** @class */ (function () {
+var Utf16BEDecoder = (function () {
     function Utf16BEDecoder() {
         this.overflowByte = -1;
     }
@@ -56,13 +52,7 @@ var Utf16BEDecoder = /** @class */ (function () {
     };
     return Utf16BEDecoder;
 }());
-// == UTF-16 codec =============================================================
-// Decoder chooses automatically from UTF-16LE and UTF-16BE using BOM and space-based heuristic.
-// Defaults to UTF-16LE, as it's prevalent and default in Node.
-// http://en.wikipedia.org/wiki/UTF-16 and http://encoding.spec.whatwg.org/#utf-16le
-// Decoder default can be changed: iconv.decode(buf, 'utf16', {defaultEncoding: 'utf-16be'});
-// Encoder uses UTF-16LE and prepends BOM (which can be overridden with addBOM: false).
-var Utf16Codec = /** @class */ (function () {
+var Utf16Codec = (function () {
     function Utf16Codec(codecOptions, iconv) {
         this.encoder = Utf16Encoder;
         this.decoder = Utf16Decoder;
@@ -70,8 +60,7 @@ var Utf16Codec = /** @class */ (function () {
     }
     return Utf16Codec;
 }());
-// -- Encoding (pass-through)
-var Utf16Encoder = /** @class */ (function () {
+var Utf16Encoder = (function () {
     function Utf16Encoder(options, codec) {
         options = options || {};
         if (options.addBOM === undefined)
@@ -86,8 +75,7 @@ var Utf16Encoder = /** @class */ (function () {
     };
     return Utf16Encoder;
 }());
-// -- Decoding
-var Utf16Decoder = /** @class */ (function () {
+var Utf16Decoder = (function () {
     function Utf16Decoder(options, codec) {
         this.initialBytesLen = 0;
         this.decoder = null;
@@ -98,12 +86,10 @@ var Utf16Decoder = /** @class */ (function () {
     }
     Utf16Decoder.prototype.write = function (buf) {
         if (!this.decoder) {
-            // Codec is not chosen yet. Accumulate initial bytes.
             this.initialBytes.push(buf);
             this.initialBytesLen += buf.byteLength;
             if (this.initialBytesLen < 16)
                 return '';
-            // We have enough bytes -> detect endianness.
             buf = util_1.concatBuf(this.initialBytes);
             var encoding = util_1.detectEncoding(buf, this.options.defaultEncoding);
             this.decoder = this.iconv.getDecoder(encoding, this.options);
@@ -124,3 +110,4 @@ var Utf16Decoder = /** @class */ (function () {
 }());
 exports.utf16be = Utf16BECodec;
 exports.utf16 = Utf16Codec;
+//# sourceMappingURL=utf16.js.map

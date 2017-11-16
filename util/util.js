@@ -49,17 +49,12 @@ exports.findIdx = findIdx;
 function detectEncoding(buf, defaultEncoding) {
     var enc = defaultEncoding || 'utf-16le';
     if (buf.length >= 2) {
-        // Check BOM.
         if (buf[0] == 0xFE && buf[1] == 0xFF)
             enc = 'utf-16be';
         else if (buf[0] == 0xFF && buf[1] == 0xFE)
             enc = 'utf-16le';
         else {
-            // No BOM found. Try to deduce encoding from initial content.
-            // Most of the time, the content has ASCII chars (U+00**), but the opposite (U+**00) is uncommon.
-            // So, we count ASCII as if it was LE or BE, and decide from that.
-            var asciiCharsLE = 0, asciiCharsBE = 0, // Counts of chars in both positions
-            _len = Math.min(buf.length - (buf.length % 2), 64); // Len is always even.
+            var asciiCharsLE = 0, asciiCharsBE = 0, _len = Math.min(buf.length - (buf.length % 2), 64);
             for (var i = 0; i < _len; i += 2) {
                 if (buf[i] === 0 && buf[i + 1] !== 0)
                     asciiCharsBE++;
@@ -79,3 +74,4 @@ function writeBuf(buf, content, startIndex, endInex) {
     return 0;
 }
 exports.writeBuf = writeBuf;
+//# sourceMappingURL=util.js.map

@@ -1,6 +1,5 @@
 "use strict";
 exports.__esModule = true;
-// Generated data for sbcs codec. Don't edit manually. Regenerate using generation/gen-sbcs.js script.
 exports._exports = {
     "437": "cp437",
     "737": "cp737",
@@ -449,3 +448,4 @@ exports._exports = {
         "chars": "���������������������������������กขฃคฅฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรฤลฦวศษสหฬอฮฯะัาำิีึืฺุู����฿เแโใไๅๆ็่้๊๋์ํ๎๏๐๑๒๓๔๕๖๗๘๙๚๛����"
     }
 };
+//# sourceMappingURL=sbcs-data-generated.js.map

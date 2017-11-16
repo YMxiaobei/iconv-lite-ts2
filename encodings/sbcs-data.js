@@ -1,8 +1,6 @@
 "use strict";
 exports.__esModule = true;
-// Manually added data to be used by sbcs codec in addition to generated one.
 exports.sbcsData = {
-    // Not supported by iconv, not sure why.
     "10029": "maccenteuro",
     "maccenteuro": {
         "type": "_sbcs",
@@ -14,7 +12,6 @@ exports.sbcsData = {
         "type": "_sbcs",
         "chars": "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдежзийклмноп░▒▓│┤╡╢╖╕╣║╗╝╜╛┐└┴┬├─┼╞╟╚╔╩╦╠═╬╧╨╤╥╙╘╒╓╫╪┘┌█▄▌▐▀рстуфхцчшщъыьэюяЁёЄєЇїЎў°∙·√№€■ "
     },
-    // Aliases of generated encodings.
     "ascii8bit": "ascii",
     "usascii": "ascii",
     "ansix34": "ascii",
@@ -139,3 +136,4 @@ exports.sbcsData = {
     "mac": "macintosh",
     "csmacintosh": "macintosh"
 };
+//# sourceMappingURL=sbcs-data.js.map

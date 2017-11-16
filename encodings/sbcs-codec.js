@@ -1,15 +1,12 @@
 "use strict";
 exports.__esModule = true;
 var util_1 = require("../util/util");
-// Single-byte codec. Needs a 'chars' string parameter that contains 256 or 128 chars that
-// correspond to encoded bytes (if 128 - then lower half is ASCII). 
-var SBCSCodec = /** @class */ (function () {
+var SBCSCodec = (function () {
     function SBCSCodec(codecOptions, iconv) {
         this.encoder = SBCSEncoder;
         this.decoder = SBCSDecoder;
         if (!codecOptions)
             throw new Error("SBCS codec is called without the data.");
-        // Prepare char buffer for decoding.
         if (!codecOptions.chars || (codecOptions.chars.length !== 128 && codecOptions.chars.length !== 256))
             throw new Error("Encoding '" + codecOptions.type + "' has incorrect 'chars' (must be of len 128 or 256)");
         if (codecOptions.chars.length === 128) {
@@ -19,7 +16,6 @@ var SBCSCodec = /** @class */ (function () {
             codecOptions.chars = asciiString + codecOptions.chars;
         }
         this.decodeBuf = new ArrayBuffer(codecOptions.chars);
-        // Encoding buffer.
         var encodeBuf = new ArrayBuffer(65536);
         var encodeBufView = new Uint8Array(encodeBuf);
         for (var i = 0; i < 65536; i++) {
@@ -31,8 +27,7 @@ var SBCSCodec = /** @class */ (function () {
     }
     return SBCSCodec;
 }());
-//--------------------------------------------------Encoder-----------------------------------------------------
-var SBCSEncoder = /** @class */ (function () {
+var SBCSEncoder = (function () {
     function SBCSEncoder(options, codec) {
         this.encodeBuf = codec.encodeBuf;
         this.encodeBufView = new Uint8Array(this.encodeBuf);
@@ -48,8 +43,7 @@ var SBCSEncoder = /** @class */ (function () {
     };
     return SBCSEncoder;
 }());
-//-----------------------------------Decoder--------------------------------------
-var SBCSDecoder = /** @class */ (function () {
+var SBCSDecoder = (function () {
     function SBCSDecoder(options, codec) {
         this.decodeBuf = codec.decodeBuf;
         this.decodeBufView = new Uint8Array(this.decodeBuf);
@@ -74,3 +68,4 @@ var SBCSDecoder = /** @class */ (function () {
     return SBCSDecoder;
 }());
 exports._sbcs = SBCSCodec;
+//# sourceMappingURL=sbcs-codec.js.map
