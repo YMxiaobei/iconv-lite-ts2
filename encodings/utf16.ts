@@ -5,7 +5,7 @@ import {bufToStr, concatBuf, detectEncoding, strToBuf} from '../util/util';
 
 // == UTF16-BE codec. ==========================================================
 
-export let utf16be = Utf16BECodec;
+
 
 class Utf16BECodec {
     encoder = Utf16BEEncoder;
@@ -92,8 +92,6 @@ class Utf16BEDecoder {
 
 // Encoder uses UTF-16LE and prepends BOM (which can be overridden with addBOM: false).
 
-export let utf16 = Utf16Codec;
-
 class Utf16Codec {
     iconv: any;
     encoder = Utf16Encoder;
@@ -178,6 +176,9 @@ class Utf16Decoder {
         return this.decoder.end();
     }
 }
+
+export let utf16be = Utf16BECodec;
+export let utf16 = Utf16Codec;
 
 
 

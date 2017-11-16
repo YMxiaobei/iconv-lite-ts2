@@ -1,6 +1,6 @@
 {
   "name": "iconv-lite-ts2",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "iconv-lite for typescript",
   "main": "./lib/index.ts",
   "scripts": {

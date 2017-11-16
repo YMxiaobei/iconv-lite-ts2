@@ -3,7 +3,7 @@ import {bufToStr} from "../util/util";
 // Single-byte codec. Needs a 'chars' string parameter that contains 256 or 128 chars that
 // correspond to encoded bytes (if 128 - then lower half is ASCII). 
 
-export let _sbcs = SBCSCodec;
+
 
 class SBCSCodec {
     encoder = SBCSEncoder;
@@ -101,4 +101,6 @@ class SBCSDecoder {
 
     }
 }
+
+export let _sbcs = SBCSCodec;
 

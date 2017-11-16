@@ -4,8 +4,7 @@
 
 import {bufToStr, strToBuf, writeBuf} from "../util/util";
 
-export let utf7 = Utf7Codec;
-export let unicode11utf7 = 'utf7'; // Alias UNICODE-1-1-UTF-7
+
 
 let nonDirectChars = /[^A-Za-z0-9'\(\),-\.\/:\? \n\r\t]+/g;
 
@@ -144,7 +143,7 @@ class Utf7Decoder {
 //  * "-&" while in base64 is not allowed.
 
 
-export let utf7imap = Utf7IMAPCodec;
+
 
 class Utf7IMAPCodec {
     iconv: any;
@@ -329,6 +328,10 @@ class Utf7IMAPDecoder {
         return res;
     }
 }
+
+export let utf7 = Utf7Codec;
+export let unicode11utf7 = 'utf7'; // Alias UNICODE-1-1-UTF-7
+export let utf7imap = Utf7IMAPCodec;
 
 
 
