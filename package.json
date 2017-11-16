@@ -1,8 +1,8 @@
 {
   "name": "iconv-lite-ts2",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "iconv-lite for typescript",
-  "main": "index.ts",
+  "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
