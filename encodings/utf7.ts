@@ -89,7 +89,7 @@ class Utf7Decoder {
                         res += "+";
                     } else {
                         let b64str = base64Accum + buf.slice(lastI, i).toString();
-                        res += this.iconv.decode(new strToBuf(b64str, 'base64'), "utf16-be");
+                        res += this.iconv.decode(strToBuf(b64str, 'base64'), "utf16-be");
                     }
 
                     if (bufView[i] != minusChar) // Minus is absorbed after base64.
@@ -111,7 +111,7 @@ class Utf7Decoder {
             base64Accum = b64str.slice(canBeDecoded); // The rest will be decoded in future.
             b64str = b64str.slice(0, canBeDecoded);
 
-            res += this.iconv.decode(new strToBuf(b64str, 'base64'), "utf16-be");
+            res += this.iconv.decode(strToBuf(b64str, 'base64'), "utf16-be");
         }
 
         this.inBase64 = inBase64;
@@ -287,7 +287,7 @@ class Utf7IMAPDecoder {
                         res += "&";
                     } else {
                         let b64str = base64Accum + bufToStr(buf.slice(lastI, i)).replace(/,/g, '/');
-                        res += this.iconv.decode(new strToBuf(b64str, 'base64'), "utf16-be");
+                        res += this.iconv.decode(strToBuf(b64str, 'base64'), "utf16-be");
                     }
 
                     if (bufView[i] != minusChar) // Minus may be absorbed after base64.

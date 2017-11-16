@@ -2,7 +2,7 @@
 
 // Manually added data to be used by sbcs codec in addition to generated one.
 
-export let exports = {
+export let sbcsData = {
     // Not supported by iconv, not sure why.
     "10029": "maccenteuro",
     "maccenteuro": {
