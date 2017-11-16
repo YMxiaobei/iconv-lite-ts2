@@ -153,8 +153,8 @@ class Utf16Decoder {
                 return '';
 
             // We have enough bytes -> detect endianness.
-            let buf = concatBuf(this.initialBytes),
-                encoding = detectEncoding(buf, this.options.defaultEncoding);
+            buf = concatBuf(this.initialBytes);
+            let encoding = detectEncoding(buf, this.options.defaultEncoding);
             this.decoder = this.iconv.getDecoder(encoding, this.options);
             this.initialBytes.length = this.initialBytesLen = 0;
         }
